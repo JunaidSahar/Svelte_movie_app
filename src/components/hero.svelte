@@ -3,10 +3,10 @@
 </script>
 
 <section
-  class="bg-[url('https://cdn.theatlantic.com/thumbor/lVO5AFJVdh9BttIsYSxh4DnraNI=/0x14:3600x2039/1600x900/media/img/mt/2018/08/Innocents_103_Unit_00028_RC/original.jpg')] h-[750px] bg-no-repeat"
+  class="h-[750px] bg-no-repeat relative overflow-hidden"
   style="background-size: cover; background-position: center;"
 >
-  <div class="backdrop-brightness-50 h-full w-full">
+  <div class="backdrop-brightness-50 h-full w-full z-20">
     <div
       class="container mx-auto h-full flex flex-col justify-center items-start gap-2"
     >
@@ -38,4 +38,16 @@
       </div>
     </div>
   </div>
+  <video
+    src="/vid9.mp4"
+    autoplay
+    loop
+    muted
+    playsinline
+    id="myVideo"
+    poster="https://sveltejs.github.io/assets/caminandes-llamigos.jpg"
+    class="absolute top-0 -z-20 w-full h-full object-cover"
+  >
+    <track kind="captions" />
+  </video>
 </section>

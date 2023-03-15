@@ -1,9 +1,9 @@
-<nav class="relative bg-white shadow dark:bg-gray-800">
+<nav class="relative bg-[#0B1723] shadow">
   <div class="container px-6 py-4 mx-auto">
     <div class="lg:flex lg:items-center lg:justify-between">
       <div class="flex items-center justify-between">
         <a href="/">
-          <img class="w-auto h-6 sm:h-7" src="/logo.svg" alt="" />
+          <img class="w-auto h-18" src="/logo.svg" alt="" />
         </a>
 
         <!-- Mobile menu button -->
