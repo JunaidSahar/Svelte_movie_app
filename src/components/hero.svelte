@@ -3,7 +3,7 @@
 </script>
 
 <section
-  class="h-[750px] bg-no-repeat relative overflow-hidden"
+  class="h-[750px] bg-no-repeat relative overflow-hidden w-full"
   style="background-size: cover; background-position: center;"
 >
   <div class="backdrop-brightness-50 h-full w-full z-20">

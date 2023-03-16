@@ -3,9 +3,12 @@
   import { page } from "$app/stores";
   import Navbar from "../../components/navbar.svelte";
   import "../../app.css";
-  import { each } from "svelte/internal";
+  import { each, HtmlTag } from "svelte/internal";
+  import Sidenav from "../../components/sidenav.svelte";
+  import Movies from "../../components/movies.svelte";
 
   let movie = [];
+  let cast = [];
 
   const url = $page.url.pathname;
 
@@ -15,42 +18,69 @@
       .then((result) => (movie = result));
   });
 
-  console.log(movie);
+  onMount(() => {
+    fetch("https://api.tvmaze.com/shows" + url + "?embed=cast")
+      .then((response) => response.json())
+      .then((result) => (cast = result._embedded.cast));
+  });
+
+  console.log(cast);
 </script>
 
 <section>
-  <Navbar />
-  <div>
-    <div
-      class="bg-cover bg-center"
-      style="background-image: url('{movie?.image?.original}');"
-    >
+  <div class="flex">
+    <Sidenav />
+    <div class="w-full relative">
+      <Navbar />
       <div
-        class="backdrop-brightness-50 py-16 h-full w-full backdrop-blur-sm backdrop-contrast-125"
+        class="h-screen absolute top-0 w-full"
+        style="background-image: url({movie?.image
+          ?.original}); background: #0B1723;
+        background-blend-mode: multiply; background-position:center; background-size:cover; background-repeat:no-repeat;"
       >
-        <div
-          class="container mx-auto h-full flex justify-between items-center space-y-4"
-        >
-          <div class="space-y-2">
-            <h1 class="text-9xl text-white font-semibold">{movie?.name}</h1>
-            <div class="flex gap-3 text-[#adb5bd] text-lg">
-              <p>{movie?.premiered}</p>
-              <span class="text-[#46B8FF]">|</span>
-              <p>{movie?.genres}</p>
+        <div class="backdrop-blur-md h-full flex items-center">
+          <div class="max-w-5xl px-20 space-y-5">
+            <h1 class="text-7xl text-white">{movie.name}</h1>
+            <div class="flex gap-3 text-white items-center">
+              <img src="/rating.svg" alt="" /> |
+              <span class="text-3xl text-white">{movie.rating?.average}</span>
             </div>
-            <div class="flex items-center text-white gap-3">
-              <img src="rating.svg" class="w-28" alt="" />
-              <span class="text-lg">{movie?.rating?.average}</span>
+            <div class="flex gap-3 text-[#56FF71] items-center">
+              <span class="text-lg text-white">{movie.premiered}</span> |
+              <span class="text-lg text-white">{movie.genres}</span> |
+              <span class="text-lg text-white">{movie.language}</span>
             </div>
-            <h4 class="text-white">{movie.language}</h4>
+            <p class="text-white font-light">{@html movie.summary}</p>
+            <div class="flex gap-6">
+              <a
+                href=""
+                class="flex text-white gap-2 px-12 py-2 border rounded-md"
+                >Continue Play
+                <img src="/play.svg" alt="" />
+              </a>
+              <a
+                href=""
+                class="flex text-white gap-2 px-12 py-2 border rounded-md"
+                >Watch Later
+                <img src="/later.svg" alt="" />
+              </a>
+            </div>
+            <div class="">
+              <h4 class="text-3xl text-white">Cast</h4>
+              <div class="grid grid-cols-4 gap-8 mt-8">
+                {#each cast as person}
+                  <div class="flex gap-2 items-center w-full">
+                    <img
+                      src={person.person.image?.medium}
+                      class="w-8 h-8 rounded-full object-cover"
+                      alt=""
+                    />
+                    <p class="text-white">{person.person.name}</p>
+                  </div>
+                {/each}
+              </div>
+            </div>
           </div>
-          <div>
-            <img src={movie?.image?.medium} class="h-96" alt="" />
-          </div>
-        </div>
-        <div class="container mx-auto h-full w-full">
-          <h4 class="text-3xl text-white">Overview Of Series</h4>
-          <p class="text-lg text-white">{@html movie?.summary}</p>
         </div>
       </div>
     </div>

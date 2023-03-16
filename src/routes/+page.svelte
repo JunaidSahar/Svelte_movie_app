@@ -3,6 +3,7 @@
   import Hero from "../components/hero.svelte";
   import Movies from "../components/movies.svelte";
   import Navbar from "../components/navbar.svelte";
+  import Sidenav from "../components/sidenav.svelte";
 
   let movies = [];
 
@@ -14,7 +15,8 @@
 </script>
 
 <section>
-  <Navbar />
-  <Hero />
-  <Movies {movies} />
+  <div class="flex">
+    <Sidenav />
+    <Movies {movies} />
+  </div>
 </section>
